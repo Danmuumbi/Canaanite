@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | ElectroHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --dark-blue: #0A2A4D;
+            --medium-blue: #1E75B9;
+            --white: #FFFFFF;
+            --light-blue: #69B3E7;
+            --black: #000000;
+            --gray: #F5F5F5;
+            --dark-gray: #333333;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--dark-blue);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--medium-blue);
+            border-radius: 2px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: var(--medium-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        /* Contact Page Styles */
+        .contact-container {
+            display: flex;
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .contact-form {
+            flex: 1;
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--medium-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30, 117, 185, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: var(--white);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231E75B9' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 12px;
+        }
+
+        .required-field::after {
+            content: '*';
+            color: #E74C3C;
+            margin-left: 5px;
+        }
+
+        /* Contact Info Styles */
+        .contact-info {
+            flex: 0 0 400px;
+        }
+
+        .info-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .info-card h3 {
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .info-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--medium-blue);
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(30, 117, 185, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--medium-blue);
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .contact-details h4 {
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            color: var(--dark-blue);
+        }
+
+        .contact-details p, .contact-details a {
+            font-size: 1rem;
+            color: #666;
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .contact-details a:hover {
+            color: var(--medium-blue);
+        }
+
+        /* Map Styles */
+        .map-container {
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Business Hours */
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .hours-table tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        .hours-table tr:last-child {
+            border-bottom: none;
+        }
+
+        .hours-table td {
+            padding: 10px 0;
+        }
+
+        .hours-table td:first-child {
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+
+        /* Departments */
+        .department-list {
+            list-style-type: none;
+            margin-top: 20px;
+        }
+
+        .department-list li {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .department-list li:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .department-list h4 {
+            color: var(--dark-blue);
+            margin-bottom: 5px;
+        }
+
+        .department-list p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .department-list a {
+            color: var(--medium-blue);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .department-list a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .contact-info {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .contact-form {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section {
+                padding: 40px 0;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .contact-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <div class="container">
+            <h1 class="section-title">Contact ElectroHub</h1>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; font-size: 1.1rem;">
+                We're here to help with any questions about our products, orders, or services. Reach out to us through any of the methods below, 
+                or fill out the contact form and we'll get back to you within 24 hours.
+            </p>
+            
+            <div class="contact-container">
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="contactName" class="form-label required-field">Full Name</label>
+                                <input type="text" id="contactName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail" class="form-label required-field">Email Address</label>
+                                <input type="email" id="contactEmail" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactPhone" class="form-label">Phone Number</label>
+                            <input type="tel" id="contactPhone" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactSubject" class="form-label required-field">Subject</label>
+                            <select id="contactSubject" class="form-select" required>
+                                <option value="">Select a subject</option>
+                                <option value="Product Inquiry">Product Inquiry</option>
+                                <option value="Order Status">Order Status</option>
+                                <option value="Shipping Information">Shipping Information</option>
+                                <option value="Returns & Exchanges">Returns & Exchanges</option>
+                                <option value="Technical Support">Technical Support</option>
+                                <option value="Business Inquiries">Business Inquiries</option>
+                                <option value="Feedback">Feedback</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactOrder" class="form-label">Order Number (if applicable)</label>
+                            <input type="text" id="contactOrder" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="contactMessage" class="form-label required-field">Your Message</label>
+                            <textarea id="contactMessage" class="form-control" required></textarea>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 40px;">
+                            <button type="submit" class="btn btn-block">Send Message</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="contact-info">
+                    <div class="info-card">
+                        <h3>Contact Information</h3>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Headquarters</h4>
+                                <p>123 Tech Plaza, Suite 500<br>San Francisco, CA 94107<br>United States</p>
+                                <a href="#" class="view-map">View on Map</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Phone</h4>
+                                <p>Sales: <a href="tel:+18005551234">+1 (800) 555-1234</a><br>
+                                Support: <a href="tel:+18005554321">+1 (800) 555-4321</a><br>
+                                International: <a href="tel:+14155551234">+1 (415) 555-1234</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Email</h4>
+                                <p>General: <a href="mailto:info@electrohub.com">info@electrohub.com</a><br>
+                                Sales: <a href="mailto:sales@electrohub.com">sales@electrohub.com</a><br>
+                                Support: <a href="mailto:support@electrohub.com">support@electrohub.com</a></p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Business Hours</h4>
+                                <table class="hours-table">
+                                    <tr>
+                                        <td>Monday - Friday</td>
+                                        <td>8:00 AM - 8:00 PM EST</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Saturday</td>
+                                        <td>9:00 AM - 6:00 PM EST</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sunday</td>
+                                        <td>10:00 AM - 4:00 PM EST</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Departments</h3>
+                        <ul class="department-list">
+                            <li>
+                                <h4>Customer Support</h4>
+                                <p>For order tracking, returns, and general inquiries</p>
+                                <a href="mailto:support@electrohub.com">support@electrohub.com</a>
+                            </li>
+                            <li>
+                                <h4>Sales & Bulk Orders</h4>
+                                <p>For product inquiries, bulk pricing, and business purchases</p>
+                                <a href="mailto:sales@electrohub.com">sales@electrohub.com</a>
+                            </li>
+                            <li>
+                                <h4>Technical Support</h4>
+                                <p>For product setup, troubleshooting, and warranty claims</p>
+                                <a href="mailto:techsupport@electrohub.com">techsupport@electrohub.com</a>
+                            </li>
+                            <li>
+                                <h4>Business Development</h4>
+                                <p>For partnerships, wholesale, and vendor inquiries</p>
+                                <a href="mailto:business@electrohub.com">business@electrohub.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.683316018012!2d-122.40384692437448!3d37.78391877190046!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8085807f10f6a3a9%3A0x3e9ae5e8a4a8a4a8!2s123%20Tech%20Plaza%2C%20San%20Francisco%2C%20CA%2094107!5e0!3m2!1sen!2sus!4v1689876543210!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Form validation
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#E74C3C';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+            
+            if (isValid) {
+                // Here you would typically send the form data to a server
+                alert('Thank you for your message! We will contact you shortly.');
+                this.reset();
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        });
+        
+        // Reset field styles when user starts typing
+        const formControls = document.querySelectorAll('.form-control, .form-select');
+        formControls.forEach(control => {
+            control.addEventListener('input', function() {
+                if (this.hasAttribute('required') && this.value.trim()) {
+                    this.style.borderColor = '#ddd';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Inquiry | ElectroHub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        :root {
+            --dark-blue: #0A2A4D;
+            --medium-blue: #1E75B9;
+            --white: #FFFFFF;
+            --light-blue: #69B3E7;
+            --black: #000000;
+            --gray: #F5F5F5;
+            --dark-gray: #333333;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--white);
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--dark-blue);
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--medium-blue);
+            border-radius: 2px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background-color: var(--medium-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        /* Inquiry Form Styles */
+        .inquiry-container {
+            display: flex;
+            gap: 50px;
+            margin-top: 50px;
+        }
+
+        .inquiry-form {
+            flex: 1;
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-blue);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--medium-blue);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30, 117, 185, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: var(--white);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%231E75B9' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 12px;
+        }
+
+        .checkbox-group, .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .checkbox-item, .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-item input, .radio-item input {
+            width: 18px;
+            height: 18px;
+        }
+
+        .form-note {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .required-field::after {
+            content: '*';
+            color: #E74C3C;
+            margin-left: 5px;
+        }
+
+        /* Inquiry Info Styles */
+        .inquiry-info {
+            flex: 0 0 400px;
+        }
+
+        .info-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        .info-card h3 {
+            color: var(--dark-blue);
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .info-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--medium-blue);
+        }
+
+        .info-card p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .info-list {
+            list-style-type: none;
+        }
+
+        .info-list li {
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .info-list li::before {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: var(--medium-blue);
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(30, 117, 185, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--medium-blue);
+            font-size: 1rem;
+        }
+
+        .contact-details h4 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+            color: var(--dark-blue);
+        }
+
+        .contact-details p, .contact-details a {
+            font-size: 0.9rem;
+            color: #666;
+            text-decoration: none;
+        }
+
+        .contact-details a:hover {
+            color: var(--medium-blue);
+        }
+
+        /* Product Selection Styles */
+        .product-selection {
+            background-color: var(--gray);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .product-option {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            background-color: var(--white);
+        }
+
+        .product-option:hover {
+            border-color: var(--medium-blue);
+        }
+
+        .product-option.selected {
+            border-color: var(--medium-blue);
+            background-color: rgba(30, 117, 185, 0.05);
+        }
+
+        .product-option img {
+            width: 100%;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 10px;
+        }
+
+        .product-option h4 {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: var(--dark-blue);
+        }
+
+        .product-option .price {
+            font-weight: 600;
+            color: var(--medium-blue);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .inquiry-container {
+                flex-direction: column;
+            }
+            
+            .inquiry-info {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .inquiry-form {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section {
+                padding: 40px 0;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <div class="container">
+            <h1 class="section-title">Product Inquiry Form</h1>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 40px; font-size: 1.1rem;">
+                Please fill out this detailed form to inquire about any of our products. Our team will contact you within 
+                24 hours with pricing, availability, and any additional information you request.
+            </p>
+            
+            <div class="inquiry-container">
+                <div class="inquiry-form">
+                    <form id="productInquiryForm">
+                        <h2 style="color: var(--dark-blue); margin-bottom: 30px; font-size: 1.8rem;">Your Information</h2>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName" class="form-label required-field">First Name</label>
+                                <input type="text" id="firstName" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName" class="form-label required-field">Last Name</label>
+                                <input type="text" id="lastName" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="email" class="form-label required-field">Email Address</label>
+                                <input type="email" id="email" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone" class="form-label required-field">Phone Number</label>
+                                <input type="tel" id="phone" class="form-control" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="company" class="form-label">Company Name (if applicable)</label>
+                            <input type="text" id="company" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="country" class="form-label required-field">Country</label>
+                            <select id="country" class="form-select" required>
+                                <option value="">Select Country</option>
+                                <option value="US">United States</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="CA">Canada</option>
+                                <option value="AU">Australia</option>
+                                <option value="DE">Germany</option>
+                                <option value="FR">France</option>
+                                <option value="JP">Japan</option>
+                                <option value="IN">India</option>
+                                <option value="BR">Brazil</option>
+                                <option value="ZA">South Africa</option>
+                                <option value="NG">Nigeria</option>
+                                <option value="KE">Kenya</option>
+                                <option value="AE">United Arab Emirates</option>
+                                <option value="SA">Saudi Arabia</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <h2 style="color: var(--dark-blue); margin: 40px 0 30px; font-size: 1.8rem;">Product Information</h2>
+                        
+                        <div class="product-selection">
+                            <div class="form-group">
+                                <label class="form-label required-field">Product Category</label>
+                                <select id="productCategory" class="form-select" required>
+                                    <option value="">Select a category</option>
+                                    <option value="laptops">Laptops & Computers</option>
+                                    <option value="smartphones">Smartphones & Tablets</option>
+                                    <option value="tvs">TVs & Home Theater</option>
+                                    <option value="audio">Audio & Headphones</option>
+                                    <option value="cameras">Cameras & Drones</option>
+                                    <option value="smart-home">Smart Home & IoT</option>
+                                    <option value="gaming">Gaming Consoles</option>
+                                    <option value="accessories">Accessories</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group" id="specificProductGroup" style="display: none;">
+                                <label class="form-label">Specific Product (optional)</label>
+                                <input type="text" id="specificProduct" class="form-control" placeholder="E.g., iPhone 14 Pro Max 256GB">
+                            </div>
+                            
+                            <div id="productSuggestions" style="display: none;">
+                                <label class="form-label">Popular Products in this Category</label>
+                                <div class="product-grid">
+                                    <div class="product-option" data-product="MacBook Pro 16\" M2 Max">
+                                        <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="MacBook Pro">
+                                        <h4>MacBook Pro 16" M2 Max</h4>
+                                        <div class="price">From $3,299</div>
+                                    </div>
+                                    <div class="product-option" data-product="iPhone 14 Pro Max 256GB">
+                                        <img src="https://images.unsplash.com/photo-1603921326210-6edd2d60ca68?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1738&q=80" alt="iPhone 14 Pro">
+                                        <h4>iPhone 14 Pro Max 256GB</h4>
+                                        <div class="price">From $1,199</div>
+                                    </div>
+                                    <div class="product-option" data-product="Sony WH-1000XM5">
+                                        <img src="https://images.unsplash.com/photo-1592155931584-901ac15763e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1748&q=80" alt="Sony Headphones">
+                                        <h4>Sony WH-1000XM5</h4>
+                                        <div class="price">From $349</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="quantity" class="form-label required-field">Quantity Needed</label>
+                            <select id="quantity" class="form-select" required>
+                                <option value="">Select quantity</option>
+                                <option value="1">1</option>
+                                <option value="2-5">2-5</option>
+                                <option value="6-10">6-10</option>
+                                <option value="11-20">11-20</option>
+                                <option value="21-50">21-50</option>
+                                <option value="51-100">51-100</option>
+                                <option value="100+">100+ (Bulk order)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="timeframe" class="form-label required-field">Purchase Timeframe</label>
+                            <select id="timeframe" class="form-select" required>
+                                <option value="">Select timeframe</option>
+                                <option value="immediately">Immediately</option>
+                                <option value="1-2 weeks">Within 1-2 weeks</option>
+                                <option value="1 month">Within 1 month</option>
+                                <option value="2-3 months">Within 2-3 months</option>
+                                <option value="3+ months">3+ months (Just researching)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Additional Requirements (check all that apply)</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="req-warranty" name="requirements" value="Extended warranty">
+                                    <label for="req-warranty">Extended warranty</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="req-bulk" name="requirements" value="Bulk discount">
+                                    <label for="req-bulk">Bulk/volume discount</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="req-custom" name="requirements" value="Custom configuration">
+                                    <label for="req-custom">Custom configuration</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="req-shipping" name="requirements" value="Special shipping">
+                                    <label for="req-shipping">Special shipping requirements</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="req-other" name="requirements" value="Other">
+                                    <label for="req-other">Other special requirements</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="budget" class="form-label">Estimated Budget (per unit)</label>
+                            <select id="budget" class="form-select">
+                                <option value="">Select budget range</option>
+                                <option value="Under $100">Under $100</option>
+                                <option value="$100-$300">$100-$300</option>
+                                <option value="$300-$600">$300-$600</option>
+                                <option value="$600-$1000">$600-$1,000</option>
+                                <option value="$1000-$2000">$1,000-$2,000</option>
+                                <option value="$2000+">$2,000+</option>
+                                <option value="not-sure">Not sure/need quote</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" class="form-label required-field">Your Inquiry Details</label>
+                            <textarea id="message" class="form-control" required placeholder="Please provide details about your inquiry, including any specific product requirements, features needed, or questions you have."></textarea>
+                            <p class="form-note">Be as detailed as possible to help us provide the best response.</p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label required-field">Preferred Contact Method</label>
+                            <div class="radio-group">
+                                <div class="radio-item">
+                                    <input type="radio" id="contact-email" name="contactMethod" value="Email" checked required>
+                                    <label for="contact-email">Email</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="contact-phone" name="contactMethod" value="Phone call" required>
+                                    <label for="contact-phone">Phone call</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="contact-whatsapp" name="contactMethod" value="WhatsApp" required>
+                                    <label for="contact-whatsapp">WhatsApp</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="contact-any" name="contactMethod" value="Any method" required>
+                                    <label for="contact-any">Any method is fine</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="reference" class="form-label">How did you hear about us?</label>
+                            <select id="reference" class="form-select">
+                                <option value="">Select an option</option>
+                                <option value="Search engine">Search engine (Google, Bing, etc.)</option>
+                                <option value="Social media">Social media</option>
+                                <option value="Friend/colleague">Friend or colleague</option>
+                                <option value="Advertisement">Advertisement</option>
+                                <option value="Existing customer">Existing customer</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group" style="margin-top: 40px;">
+                            <button type="submit" class="btn btn-block">Submit Inquiry</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <div class="inquiry-info">
+                    <div class="info-card">
+                        <h3>Why Inquire With Us?</h3>
+                        <p>Our product specialists are ready to provide you with detailed information, pricing, and expert advice tailored to your specific needs.</p>
+                        
+                        <ul class="info-list">
+                            <li>Get personalized product recommendations</li>
+                            <li>Receive volume discounts for bulk orders</li>
+                            <li>Access to exclusive deals not listed online</li>
+                            <li>Expert advice on product selection</li>
+                            <li>Custom configuration options available</li>
+                            <li>Priority customer support</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>What Happens Next?</h3>
+                        <p>After submitting your inquiry, here's what you can expect:</p>
+                        
+                        <ol style="padding-left: 25px; line-height: 1.7;">
+                            <li style="margin-bottom: 15px;"><strong>Immediate confirmation:</strong> You'll receive an email confirming we've received your inquiry.</li>
+                            <li style="margin-bottom: 15px;"><strong>Expert review:</strong> Our product specialists will review your requirements.</li>
+                            <li style="margin-bottom: 15px;"><strong>Personalized response:</strong> We'll contact you with detailed information within 24 hours.</li>
+                            <li><strong>Follow-up:</strong> We'll work with you until all your questions are answered.</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h3>Contact Information</h3>
+                        <p>Prefer to contact us directly? Here's how you can reach our sales team:</p>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Phone Support</h4>
+                                <p>Monday-Friday: 8am-8pm EST</p>
+                                <a href="tel:+18005551234">+1 (800) 555-1234</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Email Support</h4>
+                                <p>24/7 email support</p>
+                                <a href="mailto:sales@electrohub.com">sales@electrohub.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>WhatsApp</h4>
+                                <p>24/7 messaging support</p>
+                                <a href="https://wa.me/18005551234">+1 (800) 555-1234</a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-method">
+                            <div class="contact-icon">
+                                <i class="fas fa-comment-dots"></i>
+                            </div>
+                            <div class="contact-details">
+                                <h4>Live Chat</h4>
+                                <p>Available on our website</p>
+                                <a href="#">Start live chat now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Product category selection handler
+        document.getElementById('productCategory').addEventListener('change', function() {
+            const specificProductGroup = document.getElementById('specificProductGroup');
+            const productSuggestions = document.getElementById('productSuggestions');
+            
+            if (this.value && this.value !== 'other') {
+                specificProductGroup.style.display = 'block';
+                productSuggestions.style.display = 'block';
+            } else {
+                specificProductGroup.style.display = 'none';
+                productSuggestions.style.display = 'none';
+            }
+        });
+        
+        // Product option selection
+        const productOptions = document.querySelectorAll('.product-option');
+        productOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                productOptions.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                document.getElementById('specificProduct').value = this.getAttribute('data-product');
+            });
+        });
+        
+        // Form submission
+        document.getElementById('productInquiryForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Form validation
+            const requiredFields = this.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.style.borderColor = '#E74C3C';
+                    isValid = false;
+                } else {
+                    field.style.borderColor = '#ddd';
+                }
+            });
+            
+            if (isValid) {
+                // Here you would typically send the form data to a server
+                alert('Thank you for your inquiry! We will contact you shortly.');
+                this.reset();
+                
+                // Reset UI
+                document.getElementById('specificProductGroup').style.display = 'none';
+                document.getElementById('productSuggestions').style.display = 'none';
+                productOptions.forEach(opt => opt.classList.remove('selected'));
+            } else {
+                alert('Please fill in all required fields.');
+            }
+        });
+        
+        // Reset field styles when user starts typing
+        const formControls = document.querySelectorAll('.form-control, .form-select');
+        formControls.forEach(control => {
+            control.addEventListener('input', function() {
+                if (this.hasAttribute('required') && this.value.trim()) {
+                    this.style.borderColor = '#ddd';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
